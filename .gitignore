@@ -24,3 +24,9 @@ web-ext.config.ts
 *.njsproj
 *.sln
 *.sw?
+
+# Claude Code plans
+.claude/
+
+# Temp files
+nul
