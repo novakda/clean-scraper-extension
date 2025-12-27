@@ -1,0 +1,17 @@
+{
+	"folders": [
+		{
+			"name": "clean-scraper-extension",
+			"path": "."
+		},
+		{
+			"name": "general-v3-scraper",
+			"path": "../general-v3-scraper"
+		},
+		{
+			"name": "janitor-ai-scraper-extension",
+			"path": "../janitor-ai-scraper-extension"
+		}
+	],
+	"settings": {}
+}
