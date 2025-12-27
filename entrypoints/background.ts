@@ -25,15 +25,13 @@ export default defineBackground(() => {
   // Browser detection for StreamFilter support
   const isFirefox = typeof browser?.webRequest?.filterResponseData === 'function';
 
-  // TEMPORARILY DISABLED: StreamFilter causing issues on code.claude.com
-  // Will re-enable with better error handling
-  if (false && isFirefox) {
+  if (isFirefox) {
     console.log('Firefox detected - using StreamFilter API for response body capture');
     initStreamFilterCapture(pendingRequests);
   } else {
-    console.log('StreamFilter disabled - response bodies will not be captured');
+    console.log('StreamFilter not available - response bodies will not be captured');
     console.log('Request metadata and headers will still be captured');
-    // TODO: Fix StreamFilter implementation or use chrome.debugger API
+    // Note: Chrome/Edge would need chrome.debugger API for response body capture
   }
 
   // Runtime message handlers
