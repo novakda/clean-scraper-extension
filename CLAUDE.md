@@ -13,28 +13,41 @@ This is a browser extension starter template built with:
 
 ### Development
 ```bash
-npm run dev              # Dev server for Chrome (default)
-npm run dev:firefox      # Dev server for Firefox
+pnpm dev              # Dev server for Chrome (default)
+pnpm dev:firefox      # Dev server for Firefox
 ```
 
 The dev server supports hot module reload (HMR). Changes to Vue components and TypeScript files automatically reload the extension.
 
 ### Building
 ```bash
-npm run build            # Production build for Chrome
-npm run build:firefox    # Production build for Firefox
-npm run zip              # Create distributable .zip for Chrome
-npm run zip:firefox      # Create distributable .zip for Firefox
+pnpm build            # Production build for Chrome
+pnpm build:firefox    # Production build for Firefox
+pnpm zip              # Create distributable .zip for Chrome
+pnpm zip:firefox      # Create distributable .zip for Firefox
 ```
 
 ### Type Checking
 ```bash
-npm run compile          # Run TypeScript compiler without emitting files
+pnpm compile          # Run TypeScript compiler without emitting files
 ```
+
+### Testing
+```bash
+pnpm test             # Run build validation tests (fast)
+pnpm test:runtime     # Launch Firefox and monitor for runtime errors
+```
+
+The automated tests validate:
+- TypeScript compilation
+- Build process
+- Manifest validity
+- Required files presence
+- Runtime error detection (test:runtime only)
 
 ### Post-Install
 ```bash
-npm run postinstall      # Generates WXT types (runs automatically after npm install)
+pnpm postinstall      # Generates WXT types (runs automatically after pnpm install)
 ```
 
 ## Architecture
