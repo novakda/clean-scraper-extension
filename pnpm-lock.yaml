@@ -12,6 +12,12 @@ importers:
         specifier: ^3.5.25
         version: 3.5.26(typescript@5.9.3)
     devDependencies:
+      '@types/chrome':
+        specifier: ^0.1.32
+        version: 0.1.32
+      '@types/webextension-polyfill':
+        specifier: ^0.12.4
+        version: 0.12.4
       '@wxt-dev/module-vue':
         specifier: ^1.0.3
         version: 1.0.3(vite@7.3.0(@types/node@25.0.3)(jiti@2.6.1))(vue@3.5.26(typescript@5.9.3))(wxt@0.20.13(@types/node@25.0.3)(jiti@2.6.1)(rollup@4.54.0))
@@ -395,6 +401,9 @@ packages:
     cpu: [x64]
     os: [win32]
 
+  '@types/chrome@0.1.32':
+    resolution: {integrity: sha512-n5Cqlh7zyAqRLQWLXkeV5K/1BgDZdVcO/dJSTa8x+7w+sx7m73UrDmduAptg4KorMtyTW2TNnPu8RGeaDMKNGg==}
+
   '@types/estree@1.0.8':
     resolution: {integrity: sha512-dWHzHa2WqEXI/O1E9OjrocMTKJl2mSrEolh1Iomrv6U+JuNwaHXsXx9bLu5gG7BUWFIN0skIQJQ/L1rIex4X6w==}
 
@@ -412,6 +421,9 @@ packages:
 
   '@types/node@25.0.3':
     resolution: {integrity: sha512-W609buLVRVmeW693xKfzHeIV6nJGGz98uCPfeXI1ELMLXVeKYZ9m15fAMSaUPBHYLGFsVRcMmSCksQOrZV9BYA==}
+
+  '@types/webextension-polyfill@0.12.4':
+    resolution: {integrity: sha512-wK8YdSI0pDiaehSLDIvtvonYmLwUUivg4Z6JCJO8rkyssMAG82cFJgwPK/V7NO61mJBLg/tXeoXQL8AFzpXZmQ==}
 
   '@vitejs/plugin-vue@6.0.3':
     resolution: {integrity: sha512-TlGPkLFLVOY3T7fZrwdvKpjprR3s4fxRln0ORDo1VQ7HHyxJwTlrjKU3kpVWTlaAjIEuCTokmjkZnr8Tpc925w==}
@@ -1973,6 +1985,11 @@ snapshots:
   '@rollup/rollup-win32-x64-msvc@4.54.0':
     optional: true
 
+  '@types/chrome@0.1.32':
+    dependencies:
+      '@types/filesystem': 0.0.36
+      '@types/har-format': 1.2.16
+
   '@types/estree@1.0.8': {}
 
   '@types/filesystem@0.0.36':
@@ -1988,6 +2005,8 @@ snapshots:
   '@types/node@25.0.3':
     dependencies:
       undici-types: 7.16.0
+
+  '@types/webextension-polyfill@0.12.4': {}
 
   '@vitejs/plugin-vue@6.0.3(vite@7.3.0(@types/node@25.0.3)(jiti@2.6.1))(vue@3.5.26(typescript@5.9.3))':
     dependencies:

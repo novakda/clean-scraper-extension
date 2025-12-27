@@ -12,12 +12,16 @@
     "zip": "wxt zip",
     "zip:firefox": "wxt zip -b firefox",
     "compile": "vue-tsc --noEmit",
-    "postinstall": "wxt prepare"
+    "postinstall": "wxt prepare",
+    "test": "node test-extension.mjs",
+    "test:runtime": "node test-runtime.mjs"
   },
   "dependencies": {
     "vue": "^3.5.25"
   },
   "devDependencies": {
+    "@types/chrome": "^0.1.32",
+    "@types/webextension-polyfill": "^0.12.4",
     "@wxt-dev/module-vue": "^1.0.3",
     "typescript": "^5.9.3",
     "vue-tsc": "^3.1.8",
