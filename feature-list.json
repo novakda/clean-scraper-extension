@@ -34,6 +34,34 @@
         "prNumber": 4,
         "branch": "feature/feature-004"
       }
+    },
+    {
+      "id": "feature-005",
+      "name": "Popup Interface Can Open in Tab",
+      "description": "Allow the popup interface to open in a separate browser tab, providing users with a full-page view of the extension UI instead of being confined to the small popup window.",
+      "priority": 1,
+      "passes": false,
+      "verification": [
+        "Browser action configured to support opening in tab",
+        "UI can be opened as a standalone page (chrome-extension:// or moz-extension:// URL)",
+        "Option/button added to open popup in new tab",
+        "Tab view uses same Vue components as popup",
+        "Tab view displays correctly with responsive layout",
+        "All functionality works in tab mode (same as popup)",
+        "TypeScript compilation passes with no errors",
+        "Extension builds successfully for Firefox",
+        "Extension loads and functions in Firefox without errors",
+        "User can switch between popup and tab views seamlessly"
+      ],
+      "relatedFiles": [
+        "entrypoints/popup/App.vue",
+        "wxt.config.ts"
+      ],
+      "github": {
+        "issueNumber": 5,
+        "prNumber": null,
+        "branch": "feature/feature-005"
+      }
     }
   ]
 }
