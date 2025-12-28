@@ -1,10 +1,11 @@
 # WXT Vue Extension
 
 ## Tech Stack
-- **Vue** 3.5.25
+- **Vue** 3.5.26
 - **TypeScript** 5.9.3
-- **WXT** 0.20.6 - Web Extension Framework
+- **WXT** 0.20.13 - Web Extension Framework
 - **Vite** (via WXT)
+- **pnpm** 10.26.2 - Fast, disk space efficient package manager
 
 ## Project Structure
 This is a browser extension built with WXT and Vue. WXT provides a modern development experience for building browser extensions with hot reloading and TypeScript support.
@@ -13,26 +14,26 @@ This is a browser extension built with WXT and Vue. WXT provides a modern develo
 
 ### Development
 ```bash
-npm run dev              # Start dev server (Chrome)
-npm run dev:firefox      # Start dev server (Firefox)
+pnpm dev              # Start dev server (Chrome)
+pnpm dev:firefox      # Start dev server (Firefox)
 ```
 
 ### Building
 ```bash
-npm run build            # Build for Chrome
-npm run build:firefox    # Build for Firefox
-npm run zip              # Build and zip for Chrome
-npm run zip:firefox      # Build and zip for Firefox
+pnpm build            # Build for Chrome
+pnpm build:firefox    # Build for Firefox
+pnpm zip              # Build and zip for Chrome
+pnpm zip:firefox      # Build and zip for Firefox
 ```
 
 ### Type Checking
 ```bash
-npm run compile          # Run vue-tsc type check
+pnpm compile          # Run vue-tsc type check
 ```
 
-### Post-Install
+### Installation
 ```bash
-npm run postinstall      # Run wxt prepare (auto-run after install)
+pnpm install          # Install dependencies (run after cloning)
 ```
 
 ## Harness Commands

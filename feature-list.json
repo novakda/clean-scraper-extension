@@ -1,4 +1,33 @@
 {
   "version": 1,
-  "features": []
+  "features": [
+    {
+      "id": "feature-003",
+      "name": "Migrate from npm to pnpm",
+      "description": "Migrate the project's package manager from npm to pnpm for faster installs, better disk space efficiency, and stricter dependency management. This includes updating all documentation and CI/CD configurations.",
+      "priority": 1,
+      "passes": true,
+      "verification": [
+        "pnpm-lock.yaml file created in project root",
+        "package-lock.json removed from project",
+        "node_modules directory removed and reinstalled with pnpm",
+        "All npm scripts work correctly with pnpm (pnpm run dev, pnpm run build, etc.)",
+        "TypeScript compilation passes with pnpm",
+        "Build succeeds with pnpm run build",
+        "CLAUDE.md updated with pnpm commands instead of npm",
+        ".gitignore updated to ignore pnpm-specific files if needed",
+        "All dependencies install successfully with pnpm install"
+      ],
+      "relatedFiles": [
+        "package.json",
+        "CLAUDE.md",
+        ".gitignore"
+      ],
+      "github": {
+        "issueNumber": 1,
+        "prNumber": null,
+        "branch": "feature/feature-003"
+      }
+    }
+  ]
 }
