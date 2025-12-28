@@ -1,16 +1,124 @@
 {
   "version": 1,
-  "lastUpdated": "2025-12-27T00:00:00.000Z",
+  "lastUpdated": "2025-12-27T22:45:00.000Z",
   "learnedPatterns": {
-    "codePatterns": [],
-    "namingConventions": {},
-    "projectSpecificRules": []
+    "codePatterns": [
+      {
+        "pattern": "WXT framework entry points in entrypoints/ directory",
+        "description": "WXT auto-discovers background scripts, popups, and content scripts from the entrypoints/ directory",
+        "examples": ["entrypoints/background.ts", "entrypoints/popup/App.vue"]
+      },
+      {
+        "pattern": "Firefox StreamFilter API for response body capture",
+        "description": "Use browser.webRequest.filterResponseData() to intercept and read response bodies in Firefox",
+        "examples": ["lib/stream-filter.ts"]
+      },
+      {
+        "pattern": "Vue 3 Composition API with TypeScript",
+        "description": "Use <script setup lang=\"ts\"> with ref() and computed() for reactive state",
+        "examples": ["components/RequestList.vue", "components/RequestDetail.vue"]
+      }
+    ],
+    "namingConventions": {
+      "components": "PascalCase with descriptive names (RequestList, RequestDetail, RequestFilter)",
+      "files": "kebab-case for TypeScript modules (request-capture.ts, stream-filter.ts)",
+      "functions": "camelCase with action verbs (getDuration, formatBytes, handleSelect)"
+    },
+    "projectSpecificRules": [
+      "Use pnpm for package management (not npm)",
+      "Import types from @/lib/request-capture (single source of truth)",
+      "Handle optional response with null safety (response?: CapturedResponse)",
+      "Compute metadata dynamically (duration = response.timestamp - request.timestamp)"
+    ]
   },
-  "successfulApproaches": [],
-  "failedApproaches": [],
-  "agentPerformance": {},
+  "successfulApproaches": [
+    {
+      "task": "Multi-agent orchestration for complex feature",
+      "approach": "Split work across specialized agents: research-analyst for codebase exploration, typescript-pro for backend, react-specialist for frontend. Agents ran in parallel where possible.",
+      "agents": ["research-analyst", "typescript-pro", "react-specialist"],
+      "successRate": 1.0,
+      "benefits": "Reduced development time, specialized expertise, comprehensive implementation"
+    },
+    {
+      "task": "Type compatibility between backend and frontend",
+      "approach": "Use backend types as single source of truth, fix UI imports to reference lib/request-capture.ts instead of creating duplicate type files",
+      "agents": ["orchestrator"],
+      "successRate": 1.0,
+      "benefits": "Eliminated type drift, maintained consistency, reduced duplication"
+    },
+    {
+      "task": "Null safety for optional properties",
+      "approach": "Use optional chaining (entry.response?.status), computed properties for derived values, and conditional rendering in templates",
+      "agents": ["orchestrator"],
+      "successRate": 1.0,
+      "benefits": "TypeScript compilation passes, runtime safety, better UX for pending states"
+    }
+  ],
+  "failedApproaches": [
+    {
+      "task": "Initial type structure mismatch",
+      "reason": "UI agent created separate type file (lib/types/request-capture.ts) while backend used lib/request-capture.ts, causing import path issues",
+      "recordedAt": "2025-12-27T22:00:00.000Z",
+      "resolution": "Fixed by updating all imports to use backend types and removing duplicate type file"
+    },
+    {
+      "task": "UI expecting metadata property",
+      "reason": "Frontend assumed backend would include metadata: {duration, size} but backend structure was different (computed from request/response timestamps)",
+      "recordedAt": "2025-12-27T22:15:00.000Z",
+      "resolution": "Added computed properties in UI components to calculate duration and size from existing data"
+    }
+  ],
+  "agentPerformance": {
+    "research-analyst": {
+      "tasksCompleted": 1,
+      "tasksAttempted": 1,
+      "successRate": 1.0,
+      "averageDuration": "~15 minutes",
+      "specializations": ["codebase exploration", "architecture analysis", "WXT patterns"]
+    },
+    "typescript-pro": {
+      "tasksCompleted": 1,
+      "tasksAttempted": 1,
+      "successRate": 1.0,
+      "averageDuration": "~45 minutes",
+      "specializations": ["StreamFilter API", "data models", "storage systems", "TypeScript"]
+    },
+    "react-specialist": {
+      "tasksCompleted": 1,
+      "tasksAttempted": 1,
+      "successRate": 1.0,
+      "averageDuration": "~30 minutes",
+      "specializations": ["Vue 3", "UI components", "reactive state", "filtering"]
+    }
+  },
   "codebaseInsights": {
-    "hotspots": [],
-    "technicalDebt": []
+    "hotspots": [
+      {
+        "file": "entrypoints/background.ts",
+        "reason": "Central integration point for StreamFilter, message handlers, and request tracking",
+        "modifications": 3,
+        "complexity": "high"
+      },
+      {
+        "file": "wxt.config.ts",
+        "reason": "Manifest configuration including permissions",
+        "modifications": 2,
+        "complexity": "medium"
+      }
+    ],
+    "technicalDebt": [
+      {
+        "area": "No automated tests",
+        "severity": "medium",
+        "impact": "Manual testing required for all features",
+        "suggestion": "Add Vitest for unit tests, Playwright for E2E tests"
+      },
+      {
+        "area": "In-memory only storage",
+        "severity": "low",
+        "impact": "Data lost on extension reload",
+        "suggestion": "Add browser.storage.local option for persistence"
+      }
+    ]
   }
 }

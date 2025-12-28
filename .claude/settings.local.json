@@ -12,7 +12,8 @@
       "Bash(pnpm run build:firefox:*)",
       "Bash(pnpm compile:*)",
       "Bash(pnpm build:firefox:*)",
-      "Bash(git add:*)"
+      "Bash(git add:*)",
+      "Bash(git commit:*)"
     ]
   }
 }
