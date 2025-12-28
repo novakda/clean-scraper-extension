@@ -6,7 +6,7 @@
       "name": "StreamFilter Request/Response Capture with UI",
       "description": "Use Firefox's StreamFilter API to capture HTTP requests and responses matching URL patterns defined in a configuration. This feature will intercept both regular requests and XHR calls, store captured data in memory, and provide a UI to view the captured information.",
       "priority": 1,
-      "passes": false,
+      "passes": true,
       "verification": [
         "StreamFilter API integrated in background script",
         "URL pattern configuration system implemented",
@@ -40,7 +40,7 @@
       "name": "Popup Interface Can Open in Tab",
       "description": "Allow the popup interface to open in a separate browser tab, providing users with a full-page view of the extension UI instead of being confined to the small popup window.",
       "priority": 1,
-      "passes": false,
+      "passes": true,
       "verification": [
         "Browser action configured to support opening in tab",
         "UI can be opened as a standalone page (chrome-extension:// or moz-extension:// URL)",
