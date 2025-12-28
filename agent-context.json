@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "lastUpdated": "2025-12-27T12:00:00.000Z",
+  "lastUpdated": "2025-12-27T13:30:00.000Z",
   "currentSession": null,
   "projectContext": {
     "name": "my-clean-extension",
@@ -22,7 +22,9 @@
       "components": [],
       "apiRoutes": [],
       "tests": [],
-      "configs": [],
+      "configs": [
+        "wxt.config.ts"
+      ],
       "background": [
         "entrypoints/background.ts"
       ]
