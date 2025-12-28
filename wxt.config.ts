@@ -19,6 +19,7 @@ export default defineConfig({
     browser_specific_settings: {
       gecko: {
         // Firefox-specific settings (for StreamFilter API)
+        id: 'network-traffic-capturer@clean-scraper.test',
         strict_min_version: '57.0'
       }
     }

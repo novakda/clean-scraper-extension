@@ -14,19 +14,22 @@
     "compile": "vue-tsc --noEmit",
     "postinstall": "wxt prepare",
     "test": "node test-extension.mjs",
-    "test:runtime": "node test-runtime.mjs",
-    "test:auto": "node test-automated.mjs"
+    "test:auto": "node test-automated.mjs",
+    "test:xhr-smoke": "node tests/xhr-smoke-test.js"
   },
   "dependencies": {
     "vue": "^3.5.25"
   },
   "devDependencies": {
+    "@playwright/test": "^1.49.0",
     "@types/chrome": "^0.1.32",
     "@types/webextension-polyfill": "^0.12.4",
     "@wxt-dev/module-vue": "^1.0.3",
     "playwright": "^1.49.0",
+    "playwright-webextext": "^0.0.4",
     "typescript": "^5.9.3",
     "vue-tsc": "^3.1.8",
+    "web-ext": "^8.3.0",
     "wxt": "^0.20.6"
   }
 }

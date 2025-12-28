@@ -5,8 +5,9 @@ export const DEFAULT_CONFIG: CaptureConfig = {
   urlPatterns: ['*://*/*'],
   enabled: true,
   advanced: {
-    allowedStatusCodes: [200, 206],
-    requireContentType: true,
+    // Include common successful status codes for API/XHR requests
+    allowedStatusCodes: [200, 201, 202, 203, 204, 205, 206],
+    requireContentType: false, // Allow responses without Content-Type (common for APIs)
     captureRedirects: false,
     captureErrors: false,
     minBodySize: 0,

@@ -24,7 +24,8 @@ export function initStreamFilterCapture(
 
   browser.webRequest.onBeforeRequest.addListener(
     (details) => {
-      if (!details.tabId || details.tabId < 0) return undefined;
+      // Allow background requests (tabId can be -1 for extension/background requests)
+      if (details.tabId === undefined || details.tabId === null) return undefined;
 
       (async () => {
         const shouldCapture = await config.shouldCapture(details.url);
@@ -43,13 +44,17 @@ export function initStreamFilterCapture(
 
       return undefined;
     },
-    { urls: ['<all_urls>'] },
+    {
+      urls: ['<all_urls>'],
+      types: ['main_frame', 'sub_frame', 'xmlhttprequest', 'script', 'other']
+    },
     ['requestBody']
   );
 
   browser.webRequest.onBeforeSendHeaders.addListener(
     (details) => {
-      if (!details.tabId || details.tabId < 0) return undefined;
+      // Allow background requests (tabId can be -1 for extension/background requests)
+      if (details.tabId === undefined || details.tabId === null) return undefined;
 
       const requestData = pendingRequests.get(details.requestId);
       if (!requestData) return undefined;
@@ -64,7 +69,10 @@ export function initStreamFilterCapture(
 
       return undefined;
     },
-    { urls: ['<all_urls>'] },
+    {
+      urls: ['<all_urls>'],
+      types: ['main_frame', 'sub_frame', 'xmlhttprequest', 'script', 'other']
+    },
     ['requestHeaders']
   );
 
@@ -74,7 +82,8 @@ export function initStreamFilterCapture(
       // Filter MUST be created synchronously before listener returns
 
       // Synchronous pre-flight checks
-      if (!details.tabId || details.tabId < 0) return undefined;
+      // Allow background requests (tabId can be -1 for extension/background requests)
+      if (details.tabId === undefined || details.tabId === null) return undefined;
       if (!details.statusCode) return undefined;
 
       // Skip extension's own requests
@@ -260,7 +269,10 @@ export function initStreamFilterCapture(
 
       return undefined;
     },
-    { urls: ['<all_urls>'] },
+    {
+      urls: ['<all_urls>'],
+      types: ['main_frame', 'sub_frame', 'xmlhttprequest', 'script', 'other']
+    },
     ['responseHeaders']
   );
 
