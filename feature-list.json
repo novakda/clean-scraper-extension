@@ -54,8 +54,12 @@
         "User can switch between popup and tab views seamlessly"
       ],
       "relatedFiles": [
+        "components/MainApp.vue",
         "entrypoints/popup/App.vue",
-        "wxt.config.ts"
+        "entrypoints/tab/index.html",
+        "entrypoints/tab/main.ts",
+        "entrypoints/tab/App.vue",
+        "entrypoints/tab/style.css"
       ],
       "github": {
         "issueNumber": 5,

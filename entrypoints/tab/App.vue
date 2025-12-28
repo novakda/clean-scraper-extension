@@ -3,5 +3,5 @@ import MainApp from '@/components/MainApp.vue';
 </script>
 
 <template>
-  <MainApp mode="popup" />
+  <MainApp mode="tab" />
 </template>
