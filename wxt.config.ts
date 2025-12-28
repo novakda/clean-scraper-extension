@@ -7,4 +7,14 @@ export default defineConfig({
     // Automatically open browser with extension installed during development
     // See: https://wxt.dev/guide/essentials/config/browser-startup.html
   },
+  manifest: {
+    // Permissions for StreamFilter request/response capture (Firefox only)
+    permissions: [
+      'webRequest',
+      'webRequestBlocking',
+    ],
+    host_permissions: [
+      '<all_urls>',
+    ],
+  },
 });

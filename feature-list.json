@@ -2,31 +2,69 @@
   "version": 1,
   "features": [
     {
-      "id": "feature-003",
-      "name": "Migrate from npm to pnpm",
-      "description": "Migrate the project's package manager from npm to pnpm for faster installs, better disk space efficiency, and stricter dependency management. This includes updating all documentation and CI/CD configurations.",
+      "id": "feature-004",
+      "name": "StreamFilter Request/Response Capture with UI",
+      "description": "Use Firefox's StreamFilter API to capture HTTP requests and responses matching URL patterns defined in a configuration. This feature will intercept both regular requests and XHR calls, store captured data in memory, and provide a UI to view the captured information.",
       "priority": 1,
-      "passes": true,
+      "passes": false,
       "verification": [
-        "pnpm-lock.yaml file created in project root",
-        "package-lock.json removed from project",
-        "node_modules directory removed and reinstalled with pnpm",
-        "All npm scripts work correctly with pnpm (pnpm run dev, pnpm run build, etc.)",
-        "TypeScript compilation passes with pnpm",
-        "Build succeeds with pnpm run build",
-        "CLAUDE.md updated with pnpm commands instead of npm",
-        ".gitignore updated to ignore pnpm-specific files if needed",
-        "All dependencies install successfully with pnpm install"
+        "StreamFilter API integrated in background script",
+        "URL pattern configuration system implemented",
+        "Regular HTTP requests captured successfully",
+        "XHR requests captured successfully",
+        "Request headers, body, and metadata stored",
+        "Response headers, body, and status stored",
+        "In-memory storage working correctly",
+        "UI displays list of captured requests",
+        "UI shows detailed request/response information",
+        "Pattern matching filters work correctly",
+        "TypeScript compilation passes with no errors",
+        "Extension builds successfully for Firefox",
+        "Extension loads and functions in Firefox without errors"
       ],
       "relatedFiles": [
-        "package.json",
-        "CLAUDE.md",
-        ".gitignore"
+        "entrypoints/background.ts",
+        "entrypoints/popup/App.vue",
+        "lib/stream-filter.ts",
+        "lib/request-capture.ts",
+        "lib/config.ts"
       ],
       "github": {
-        "issueNumber": 1,
-        "prNumber": null,
-        "branch": "feature/feature-003"
+        "issueNumber": 3,
+        "prNumber": 4,
+        "branch": "feature/feature-004"
+      }
+    },
+    {
+      "id": "feature-005",
+      "name": "Popup Interface Can Open in Tab",
+      "description": "Allow the popup interface to open in a separate browser tab, providing users with a full-page view of the extension UI instead of being confined to the small popup window.",
+      "priority": 1,
+      "passes": false,
+      "verification": [
+        "Browser action configured to support opening in tab",
+        "UI can be opened as a standalone page (chrome-extension:// or moz-extension:// URL)",
+        "Option/button added to open popup in new tab",
+        "Tab view uses same Vue components as popup",
+        "Tab view displays correctly with responsive layout",
+        "All functionality works in tab mode (same as popup)",
+        "TypeScript compilation passes with no errors",
+        "Extension builds successfully for Firefox",
+        "Extension loads and functions in Firefox without errors",
+        "User can switch between popup and tab views seamlessly"
+      ],
+      "relatedFiles": [
+        "components/MainApp.vue",
+        "entrypoints/popup/App.vue",
+        "entrypoints/tab/index.html",
+        "entrypoints/tab/main.ts",
+        "entrypoints/tab/App.vue",
+        "entrypoints/tab/style.css"
+      ],
+      "github": {
+        "issueNumber": 5,
+        "prNumber": 6,
+        "branch": "feature/feature-005"
       }
     }
   ]

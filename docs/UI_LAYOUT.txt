@@ -1,0 +1,206 @@
+┌─────────────────────────────────────────────────────────────────────────────────┐
+│  HTTP Request Capture UI - Layout Reference (800px × 600px)                    │
+└─────────────────────────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────────────────────────┐
+│  HTTP Request Capture                        [▶] [Refresh] [Clear All]         │
+├─────────────────────────────────────────────────────────────────────────────────┤
+│  URL Pattern: [________________]  Method: [All Methods ▼]  Status: [___]       │
+│  [Clear Filters]                                                                │
+├─────────────────────────────────────────────────────────────────────────────────┤
+│ Requests (0)                                                                    │
+├────────────────────────────────────────────┬────────────────────────────────────┤
+│ Method  │ URL          │ Status │ Time    │                                    │
+├────────────────────────────────────────────┤                                    │
+│  [GET]  │ example.com  │ [200]  │ 10:30   │  << Empty when no selection        │
+│  [POST] │ api.test.com │ [201]  │ 10:31   │                                    │
+│  [GET]  │ cdn.site.com │ [404]  │ 10:32   │                                    │
+│         │              │        │         │                                    │
+│         │              │        │         │                                    │
+│         │              │        │         │                                    │
+└────────────────────────────────────────────┴────────────────────────────────────┘
+
+
+WITH SELECTION:
+
+┌─────────────────────────────────────────────────────────────────────────────────┐
+│  HTTP Request Capture                        [▶] [Refresh] [Clear All]         │
+├─────────────────────────────────────────────────────────────────────────────────┤
+│  URL Pattern: [________________]  Method: [All Methods ▼]  Status: [___]       │
+│  [Clear Filters]                                                                │
+├─────────────────────────────────────────────────────────────────────────────────┤
+│ Requests (3)                                                                    │
+├────────────────────────────────────┬────────────────────────────────────────────┤
+│ Method │ URL         │ Status │ T │  Request Details                      [×]  │
+├────────────────────────────────────┤                                            │
+│ [GET]  │ example.com │ [200]  │ 1 │  URL: https://api.example.com/data         │
+│ [POST] │ api.test    │ [201]  │ 1 │  Method: POST                              │
+│ [GET]  │ cdn.site    │ [404]  │ 1 │  Status: 201 Created                       │
+│        │             │        │   │  Duration: 234ms                           │
+│        │             │        │   │  Size: 1.5 KB                              │
+│        │             │        │   │                                            │
+│        │             │        │   │  [Request] [Response]                      │
+│        │             │        │   │  ────────────────────                      │
+│        │             │        │   │  HEADERS                 [Copy Request]    │
+│        │             │        │   │  content-type: application/json            │
+│        │             │        │   │  authorization: Bearer xxx...              │
+│        │             │        │   │                                            │
+│        │             │        │   │  BODY                                      │
+│        │             │        │   │  {                                         │
+│        │             │        │   │    "name": "test",                         │
+│        │             │        │   │    "value": 123                            │
+│        │             │        │   │  }                                         │
+└────────────────────────────────────┴────────────────────────────────────────────┘
+
+
+COLOR SCHEME:
+
+HTTP Methods:
+  GET     - Blue background (#2196f3)
+  POST    - Green background (#4caf50)
+  PUT     - Orange background (#ff9800)
+  DELETE  - Red background (#f44336)
+  PATCH   - Purple background (#9c27b0)
+  Other   - Gray background (#9e9e9e)
+
+Status Codes:
+  2xx     - Green background (#4caf50)
+  3xx     - Blue background (#2196f3)
+  4xx     - Orange background (#ff9800)
+  5xx     - Red background (#f44336)
+
+
+EMPTY STATE:
+
+┌─────────────────────────────────────────────────────────────────────────────────┐
+│  HTTP Request Capture                        [▶] [Refresh] [Clear All]         │
+├─────────────────────────────────────────────────────────────────────────────────┤
+│  URL Pattern: [________________]  Method: [All Methods ▼]  Status: [___]       │
+│  [Clear Filters]                                                                │
+├─────────────────────────────────────────────────────────────────────────────────┤
+│ Requests (0)                                                                    │
+├─────────────────────────────────────────────────────────────────────────────────┤
+│                                                                                 │
+│                                                                                 │
+│                        No HTTP requests captured yet.                           │
+│                                                                                 │
+│                      Start browsing to capture requests.                        │
+│                                                                                 │
+│                                                                                 │
+└─────────────────────────────────────────────────────────────────────────────────┘
+
+
+ERROR STATE:
+
+┌─────────────────────────────────────────────────────────────────────────────────┐
+│  HTTP Request Capture                        [▶] [Refresh] [Clear All]         │
+├─────────────────────────────────────────────────────────────────────────────────┤
+│  ⚠ Failed to communicate with background script                           [×]  │
+├─────────────────────────────────────────────────────────────────────────────────┤
+│  URL Pattern: [________________]  Method: [All Methods ▼]  Status: [___]       │
+│  [Clear Filters]                                                                │
+├─────────────────────────────────────────────────────────────────────────────────┤
+│ Requests (0)                                                                    │
+├─────────────────────────────────────────────────────────────────────────────────┤
+│                        No HTTP requests captured yet.                           │
+└─────────────────────────────────────────────────────────────────────────────────┘
+
+
+LOADING STATE:
+
+┌─────────────────────────────────────────────────────────────────────────────────┐
+│  HTTP Request Capture                        [▶] [Loading...] [Clear All]      │
+├─────────────────────────────────────────────────────────────────────────────────┤
+│  ...                                                                            │
+└─────────────────────────────────────────────────────────────────────────────────┘
+
+
+AUTO-REFRESH ACTIVE:
+
+┌─────────────────────────────────────────────────────────────────────────────────┐
+│  HTTP Request Capture                        [⏸] [Refresh] [Clear All]         │
+│                                               ↑ Green when active               │
+└─────────────────────────────────────────────────────────────────────────────────┘
+
+
+COMPONENT HIERARCHY:
+
+App.vue
+├── .app-header
+│   ├── h1 "HTTP Request Capture"
+│   └── .header-actions
+│       ├── button.auto-refresh-btn
+│       ├── button.refresh-btn
+│       └── button.clear-btn
+├── .error-banner (conditional)
+│   ├── span (error message)
+│   └── button (dismiss)
+├── RequestFilter
+│   ├── .filter-group (URL)
+│   ├── .filter-group (Method)
+│   ├── .filter-group (Status)
+│   └── .filter-actions
+│       └── button.clear-btn
+└── .app-content
+    ├── .list-panel
+    │   ├── .list-header
+    │   │   └── h2 "Requests (N)"
+    │   └── RequestList
+    │       ├── .empty-state (when no requests)
+    │       └── .request-table
+    │           ├── .request-header (sticky)
+    │           └── .request-row (clickable, repeating)
+    └── .detail-panel (conditional)
+        └── RequestDetail
+            ├── .detail-header
+            │   ├── h3 "Request Details"
+            │   └── button.close-btn
+            ├── .detail-metadata
+            │   └── .metadata-item (repeating)
+            ├── .detail-tabs
+            │   ├── button.tab (Request)
+            │   └── button.tab (Response)
+            └── .detail-content
+                └── .tab-content
+                    ├── .section (Headers)
+                    │   ├── .section-header
+                    │   │   ├── h4
+                    │   │   └── button.copy-btn
+                    │   └── .headers-list
+                    │       └── .header-item (repeating)
+                    └── .section (Body)
+                        └── pre.code-block
+
+
+RESPONSIVE BEHAVIOR:
+
+Width: 800px (fixed)
+- List panel: Flexible (400px when detail open, 800px when closed)
+- Detail panel: 400px (fixed when open)
+
+Height: 600px (fixed)
+- Header: ~60px
+- Filters: ~80px
+- Content: ~460px (scrollable)
+
+
+INTERACTIONS:
+
+Click Request Row → Show detail panel on right
+Click Detail Close → Hide detail panel
+Click Filter Input → Filter updates in real-time
+Click Clear Filters → Reset all filters
+Click Refresh → Fetch latest requests from background
+Click Clear All → Confirm dialog → Clear all requests
+Click Auto-Refresh → Toggle 2-second polling
+Click Copy Button → Copy data to clipboard
+Switch Tabs → Show Request or Response view
+
+
+KEYBOARD NAVIGATION:
+
+Tab → Focus next element
+Shift+Tab → Focus previous element
+Enter → Activate button/select item
+Escape → Close detail panel (could be added)
+Arrow Keys → Navigate list (could be added)
