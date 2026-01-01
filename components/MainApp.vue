@@ -1,179 +1,29 @@
-<script lang="ts" setup>
-import { ref, computed, onMounted } from 'vue';
-import RequestList from '@/components/RequestList.vue';
+<script setup lang="ts">
+import { useRequestCapture } from '@/lib/composables/useRequestCapture';
+import { useRequestFilters } from '@/lib/composables/useRequestFilters';
+import { useAutoRefresh } from '@/lib/composables/useAutoRefresh';
+import RequestList from '@/components/request-viewer/RequestList.vue';
 import RequestDetail from '@/components/RequestDetail.vue';
-import RequestFilter from '@/components/RequestFilter.vue';
-import type { CapturedEntry } from '@/lib/request-capture';
+import RequestFilter from '@/components/request-viewer/RequestFilter.vue';
 
-// Component props
-interface Props {
-  mode?: 'popup' | 'tab';
-}
-
-const props = withDefaults(defineProps<Props>(), {
-  mode: 'popup'
-});
-
-// Define UI-specific types
-interface RequestFilters {
-  urlPattern: string;
-  method: string;
-  statusCode: string;
-}
-
-interface BackgroundResponse<T = unknown> {
-  success: boolean;
-  data?: T;
-  error?: string;
-}
-
-const capturedRequests = ref<CapturedEntry[]>([]);
-const selectedRequest = ref<CapturedEntry | null>(null);
-const filters = ref<RequestFilters>({
-  urlPattern: '',
-  method: '',
-  statusCode: '',
-});
-const isLoading = ref(false);
-const error = ref<string | null>(null);
-const autoRefresh = ref(false);
-let refreshInterval: number | null = null;
-
-// Filter requests based on current filters
-const filteredRequests = computed(() => {
-  let filtered = capturedRequests.value;
-
-  if (filters.value.urlPattern) {
-    const pattern = filters.value.urlPattern.toLowerCase();
-    filtered = filtered.filter((entry) => entry.request.url.toLowerCase().includes(pattern));
-  }
-
-  if (filters.value.method) {
-    filtered = filtered.filter((entry) => entry.request.method === filters.value.method);
-  }
-
-  if (filters.value.statusCode) {
-    const statusCode = parseInt(filters.value.statusCode);
-    if (!isNaN(statusCode)) {
-      filtered = filtered.filter((entry) => entry.response?.status === statusCode);
-    }
-  }
-
-  return filtered;
-});
-
-// Fetch captured requests from background script
-async function fetchRequests(): Promise<void> {
-  isLoading.value = true;
-  error.value = null;
-
-  try {
-    const response = await browser.runtime.sendMessage({
-      type: 'GET_CAPTURED_REQUESTS',
-    }) as BackgroundResponse<CapturedEntry[]>;
-
-    if (response.success && response.data) {
-      capturedRequests.value = response.data;
-    } else {
-      error.value = response.error || 'Failed to fetch requests';
-      // If backend is not ready yet, show empty array instead of error
-      if (error.value.includes('Unknown message type')) {
-        capturedRequests.value = [];
-        error.value = null;
-      }
-    }
-  } catch (err) {
-    console.error('Error fetching requests:', err);
-    error.value = 'Failed to communicate with background script';
-    // Don't show error for initial connection issues
-    capturedRequests.value = [];
-  } finally {
-    isLoading.value = false;
-  }
-}
-
-// Clear all captured requests
-async function clearRequests(): Promise<void> {
-  if (!confirm('Are you sure you want to clear all captured requests?')) {
-    return;
-  }
-
-  isLoading.value = true;
-  error.value = null;
-
-  try {
-    const response = await browser.runtime.sendMessage({
-      type: 'CLEAR_CAPTURED_REQUESTS',
-    }) as BackgroundResponse<void>;
-
-    if (response.success) {
-      capturedRequests.value = [];
-      selectedRequest.value = null;
-    } else {
-      error.value = response.error || 'Failed to clear requests';
-    }
-  } catch (err) {
-    console.error('Error clearing requests:', err);
-    error.value = 'Failed to communicate with background script';
-  } finally {
-    isLoading.value = false;
-  }
-}
+// Use composables for state management
+const { capturedRequests, fetchRequests, clearRequests, isLoading, error } = useRequestCapture();
+const { filteredRequests, updateFilters } = useRequestFilters(capturedRequests);
+const { autoRefresh, toggleAutoRefresh } = useAutoRefresh();
 
 // Handle request selection
-function handleSelectRequest(entry: CapturedEntry): void {
+function handleSelectRequest(entry: import('@/lib/request-capture').CapturedEntry) {
   selectedRequest.value = entry;
 }
 
-// Handle filter updates
-function handleFilterUpdate(newFilters: RequestFilters): void {
-  filters.value = newFilters;
-}
-
-// Handle close detail view
-function handleCloseDetail(): void {
+// Handle detail view close
+function handleCloseDetail() {
   selectedRequest.value = null;
 }
-
-// Toggle auto-refresh
-function toggleAutoRefresh(): void {
-  autoRefresh.value = !autoRefresh.value;
-
-  if (autoRefresh.value) {
-    // Refresh every 2 seconds
-    refreshInterval = window.setInterval(() => {
-      fetchRequests();
-    }, 2000);
-  } else {
-    if (refreshInterval !== null) {
-      clearInterval(refreshInterval);
-      refreshInterval = null;
-    }
-  }
-}
-
-// Open in new tab (only available in popup mode)
-async function openInTab(): Promise<void> {
-  await browser.tabs.create({
-    url: browser.runtime.getURL('/tab.html')
-  });
-}
-
-// Lifecycle
-onMounted(() => {
-  fetchRequests();
-});
-
-// Cleanup on unmount
-window.addEventListener('beforeunload', () => {
-  if (refreshInterval !== null) {
-    clearInterval(refreshInterval);
-  }
-});
 </script>
 
 <template>
-  <div id="app" :class="props.mode + '-mode'">
+  <div class="app-container">
     <div class="app-header">
       <h1>HTTP Request Capture</h1>
       <div class="header-actions">
@@ -192,7 +42,11 @@ window.addEventListener('beforeunload', () => {
         >
           ↗
         </button>
-        <button class="refresh-btn" @click="fetchRequests" :disabled="isLoading">
+        <button
+          class="refresh-btn"
+          @click="fetchRequests"
+          :disabled="isLoading"
+        >
           {{ isLoading ? 'Loading...' : 'Refresh' }}
         </button>
         <button
@@ -225,7 +79,10 @@ window.addEventListener('beforeunload', () => {
       </div>
 
       <div v-if="selectedRequest" class="detail-panel">
-        <RequestDetail :entry="selectedRequest" @close="handleCloseDetail" />
+        <RequestDetail
+          :entry="selectedRequest"
+          @close="handleCloseDetail"
+        />
       </div>
     </div>
   </div>
@@ -238,23 +95,13 @@ window.addEventListener('beforeunload', () => {
   overflow: hidden;
 }
 
-#app.popup-mode {
-  width: 800px;
-  height: 600px;
-}
-
-#app.tab-mode {
-  width: 100vw;
-  height: 100vh;
-}
-
 .app-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 1rem;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-  background: rgba(0, 0, 0, 0.2);
+  background: rgba(0, 0, 0, 0.05);
 }
 
 .app-header h1 {
@@ -329,7 +176,7 @@ window.addEventListener('beforeunload', () => {
   border-radius: 4px;
   cursor: pointer;
   transition: all 0.15s;
-  background-color: rgba(244, 67, 54, 0.2);
+  background-color: rgba(244, 67, 54, 0.1);
   border: 1px solid rgba(244, 67, 54, 0.4);
 }
 
@@ -348,10 +195,14 @@ window.addEventListener('beforeunload', () => {
   justify-content: space-between;
   align-items: center;
   padding: 0.75rem 1rem;
-  background-color: rgba(244, 67, 54, 0.2);
+  background-color: rgba(244, 67, 54, 0.1);
   border-bottom: 1px solid rgba(244, 67, 54, 0.4);
   color: #f44336;
   font-size: 0.875rem;
+}
+
+.error-banner span {
+  margin-right: 1rem;
 }
 
 .error-banner button {
@@ -365,17 +216,12 @@ window.addEventListener('beforeunload', () => {
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 4px;
-  transition: background-color 0.15s;
-}
-
-.error-banner button:hover {
-  background-color: rgba(255, 255, 255, 0.1);
+  color: #999;
+  font-weight: 600;
 }
 
 .app-content {
   flex: 1;
-  display: flex;
   overflow: hidden;
 }
 
@@ -388,7 +234,7 @@ window.addEventListener('beforeunload', () => {
 
 .list-header {
   padding: 0.75rem 1rem;
-  background: rgba(0, 0, 0, 0.1);
+  background: rgba(0, 0, 0, 0.05);
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 

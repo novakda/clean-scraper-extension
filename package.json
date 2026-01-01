@@ -12,7 +12,14 @@
     "zip": "wxt zip",
     "zip:firefox": "wxt zip -b firefox",
     "compile": "vue-tsc --noEmit",
-    "postinstall": "wxt prepare"
+    "postinstall": "wxt prepare",
+    "test": "wxt test",
+    "test:unit": "wxt test --run tests/unit",
+    "test:integration": "wxt test --run tests/integration",
+    "test:components": "wxt test --run tests/components",
+    "test:all": "wxt test",
+    "lint": "eslint \"lib/**/*.ts\" \"components/**/*.vue\" \"tests/**/*.ts\" \"tests/**/*.vue\"",
+    "typecheck": "vue-tsc --noEmit"
   },
   "dependencies": {
     "vue": "^3.5.25"

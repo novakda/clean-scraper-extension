@@ -2,7 +2,7 @@
  * Configuration system for StreamFilter request/response capture
  */
 
-type ResourceType = 'main_frame' | 'sub_frame' | 'stylesheet' | 'script' | 'image' | 'font' | 'object' | 'xmlhttprequest' | 'ping' | 'csp_report' | 'media' | 'websocket' | 'other';
+import type { ResourceType } from 'wxt/browser';
 
 interface RequestFilter {
   urls: string[];
@@ -15,15 +15,20 @@ interface RequestFilter {
 export interface CaptureConfig {
   /** URL patterns to capture (match patterns) */
   urlPatterns: string[];
+
   /** Maximum number of entries to store in memory */
   maxEntries: number;
+
   /** Maximum size of response body to capture (in bytes) */
   maxBodySize: number;
+
   /** Whether to capture request bodies */
   captureRequestBody: boolean;
+
   /** Whether to capture response bodies */
   captureResponseBody: boolean;
-  /** Resource types to capture (e.g., 'xmlhttprequest', 'main_frame') */
+
+  /** Resource types to capture (e.g., 'xmlhttprequest', 'main_frame', 'script') */
   resourceTypes: ResourceType[];
 }
 
@@ -162,14 +167,16 @@ export function isValidUrlPattern(pattern: string): boolean {
     }
 
     const [scheme, rest] = parts;
-    const validSchemes = ['*', 'http', 'https', 'ftp', 'file'];
+    const hostAndPath = rest.split('/');
 
-    if (!validSchemes.includes(scheme)) {
+    if (hostAndPath.length < 1) {
       return false;
     }
 
     // Rest should contain at least a slash for path
-    if (!rest.includes('/')) {
+    const validSchemes = ['*', 'http', 'https', 'ftp', 'file'];
+
+    if (!validSchemes.includes(scheme)) {
       return false;
     }
 

@@ -1,21 +1,18 @@
 /**
- * Data models for capturing HTTP requests and responses using StreamFilter API
+ * Data models for capturing HTTP requests and responses
+ *
+ * DEPRECATED: This file has been refactored.
+ * All types are now exported from @/lib/types/capture.ts
+ * All utility functions are now exported from @/lib/utils.ts
+ *
+ * MIGRATION: Update imports to use:
+ *   import type { CapturedRequest, CapturedResponse, CapturedEntry, CaptureStats } from './types/capture';
+ *   import { parseHeaders, arrayBufferToString, uint8ArrayToString, truncateData, isTextContent } from './utils';
  */
 
-type HttpHeader = { name: string; value?: string };
-type HttpHeaders_ = HttpHeader[];
+export type * from './types/capture';
 
-interface OnBeforeRequestDetails {
-  requestId: string;
-  url: string;
-  method: string;
-  frameId: number;
-  parentFrameId: number;
-  requestBody?: any;
-  tabId: number;
-  type: string;
-  timeStamp: number;
-}
+export * from './utils';
 
 /**
  * HTTP headers represented as key-value pairs
