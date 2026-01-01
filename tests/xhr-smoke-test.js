@@ -36,6 +36,7 @@ const __dirname = path.dirname(__filename);
 const EXTENSION_PATH = path.join(__dirname, '..', '.output', 'firefox-mv2');
 const TEST_URL = 'https://www.nseindia.com/';
 const WAIT_FOR_REQUESTS_MS = 15000;
+const EXTENSION_ID = 'network-traffic-capturer@clean-scraper.test'; // Static ID from manifest
 
 function log(message, symbol = '•') {
   console.log(`${symbol} ${message}`);
@@ -143,52 +144,11 @@ async function runTest() {
     await sleep(2000);
 
     heading('Accessing Extension Popup');
-    log('Finding extension ID...', '5️⃣');
+    log('Using static extension ID...', '5️⃣');
+    log(`Extension ID: ${EXTENSION_ID}`, '  ');
 
-    // Navigate to about:debugging to find extension
-    try {
-      await page.goto('about:debugging#/runtime/this-firefox', {
-        timeout: 60000,
-        waitUntil: 'domcontentloaded'
-      });
-      await sleep(3000);
-    } catch (error) {
-      console.error('⚠️  Warning: Could not load about:debugging page');
-      console.error(`   Error: ${error.message}`);
-      console.error('   Trying alternative approach...\n');
-    }
-
-    // Find extension ID
-    const extensionId = await page.evaluate(() => {
-      const cards = Array.from(document.querySelectorAll('.debug-target-item'));
-      const extensionCard = cards.find(card =>
-        card.textContent?.includes('Network Traffic Capturer')
-      );
-
-      if (extensionCard) {
-        const manifestUrl = extensionCard.querySelector('[href*="moz-extension"]')?.getAttribute('href');
-        if (manifestUrl) {
-          const match = manifestUrl.match(/moz-extension:\/\/([^/]+)/);
-          return match ? match[1] : null;
-        }
-      }
-      return null;
-    });
-
-    if (!extensionId) {
-      console.error('❌ Extension not found in about:debugging');
-      console.error('\nPlease ensure:');
-      console.error('   1. Extension is built: pnpm build');
-      console.error('   2. Extension loads in Firefox');
-      console.error('   3. Extension name is "Network Traffic Capturer"\n');
-      await cleanup();
-      process.exit(1);
-    }
-
-    log(`Extension ID: ${extensionId}`, '  ');
-
-    // Open extension popup
-    const popupUrl = `moz-extension://${extensionId}/popup.html`;
+    // Open extension popup using static ID
+    const popupUrl = `moz-extension://${EXTENSION_ID}/popup.html`;
     log('Opening extension popup...', '  ');
     await page.goto(popupUrl, { timeout: 10000 });
     await sleep(2000);
